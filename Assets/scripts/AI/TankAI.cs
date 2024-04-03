@@ -45,9 +45,8 @@ public class TankAI : MonoBehaviour
 
 
     public float enemyHealth;
-
-
     public bool GameInProgress = true;
+    private Animator anim;
 
     void Start(){
         // Get the AIPath component attached to this GameObject
@@ -65,6 +64,7 @@ public class TankAI : MonoBehaviour
 
         // Setting references
         rb = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<Animator>();
         calculatePriority = gameObject.GetComponent<CalculatePriority>();
         aiPath = gameObject.GetComponent<AIPath>();
         seeker = GetComponent<Seeker>();
@@ -79,6 +79,16 @@ public class TankAI : MonoBehaviour
         UpdatePriorities();
         ExecuteAction();
 
+        // Check if the tank is moving
+        if (rb.velocity.magnitude > 0.1f)
+        {
+            anim.SetBool("IsMoving", true);
+        }
+        else
+        {
+            // Tank is not moving
+            anim.SetBool("IsMoving", false);
+        }
     }
 
         // Define actions
