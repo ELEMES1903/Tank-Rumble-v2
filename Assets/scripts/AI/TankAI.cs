@@ -46,6 +46,9 @@ public class TankAI : MonoBehaviour
 
     public float enemyHealth;
 
+
+    public bool GameInProgress = true;
+
     void Start(){
         // Get the AIPath component attached to this GameObject
         aiPath = GetComponent<AIPath>();
@@ -96,22 +99,26 @@ public class TankAI : MonoBehaviour
     // Select action with highest priority and execute it
     void ExecuteAction()
     {
-        ActionType highestPriorityAction = GetHighestPriorityAction();
-        switch (highestPriorityAction)
-        {
-            case ActionType.MoveToTarget:
-                MoveToTarget();
-                break;
-            case ActionType.FindHealth:
-                FindHealth();
-                break;
-            case ActionType.Roam:
-                Roam();
-                break;
-            case ActionType.Capture:
-                Capture();
-                break;
-        }
+        //if(GameInProgress == true){
+
+            ActionType highestPriorityAction = GetHighestPriorityAction();
+            switch (highestPriorityAction)
+            {
+                case ActionType.MoveToTarget:
+                    MoveToTarget();
+                    break;
+                case ActionType.FindHealth:
+                    FindHealth();
+                    break;
+                case ActionType.Roam:
+                    Roam();
+                    break;
+                case ActionType.Capture:
+                    Capture();
+                    break;
+            }
+
+        //}
     }
 
     ActionType GetHighestPriorityAction()
