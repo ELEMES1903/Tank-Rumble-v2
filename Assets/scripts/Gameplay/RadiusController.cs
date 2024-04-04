@@ -6,8 +6,10 @@ public class RadiusController : MonoBehaviour
     public float radius = 5f;
 
     // Variables to track progress for Tank1 and Tank2
-    public int t1Progress = 0;
-    public int t2Progress = 0;
+    public int redProgress = 0;
+    public int blueProgress = 0;
+    public bool redPoint;
+    public bool bluePoint;
 
     // Flags to track presence of Tank1 and Tank2
     private bool tank1Detected = false;
@@ -17,6 +19,21 @@ public class RadiusController : MonoBehaviour
     private float timer = 0f;
     public float interval = 1f; // Interval in seconds
 
+
+    // Sprites
+    public Sprite redSprite;
+    public Sprite blueSprite;
+
+    // Reference to the sprite renderer
+    private SpriteRenderer spriteRenderer;
+
+    public bool captured; 
+
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +42,7 @@ public class RadiusController : MonoBehaviour
         tank1Detected = false;
         tank2Detected = false;
 
-
+        captured = false;
         
         // Check for tanks within the radius
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
@@ -41,7 +58,6 @@ public class RadiusController : MonoBehaviour
                 tank2Detected = true;
             }
         }    
-
             
         // Update progress based on tank detections
         if (tank1Detected && tank2Detected)
@@ -50,49 +66,100 @@ public class RadiusController : MonoBehaviour
         }
         else if (tank1Detected)
         {
-            UpdateProgress(ref t1Progress, ref t2Progress);
+            UpdateCaptureStatus(ref redProgress, ref blueProgress, ref redPoint, ref bluePoint);
+            ManualUpdateProgress(ref redProgress, ref blueProgress, ref redPoint, ref bluePoint);
         }
         else if (tank2Detected)
         {
-            UpdateProgress(ref t2Progress, ref t1Progress);
+            UpdateCaptureStatus(ref blueProgress, ref redProgress, ref bluePoint, ref redPoint);
+            ManualUpdateProgress(ref blueProgress, ref redProgress, ref bluePoint, ref redPoint);
+
         }
         else
         {
-            // No tanks detected: decrease progress for both tanks
-
-            DecreaseProgress(ref t1Progress);
-            DecreaseProgress(ref t2Progress);
+            AutoUpdateProgress(ref redProgress, ref redPoint);
+            AutoUpdateProgress(ref blueProgress, ref bluePoint);
         }      
     }
 
-    void UpdateProgress(ref int progressToUpdate, ref int otherProgress)
+    void UpdateCaptureStatus(ref int allyProgress, ref int enemyProgress, ref bool allyPoint, ref bool enemyPoint)
+    {
+        if (allyPoint == false && enemyPoint == false && allyProgress == 10)
+        {
+            allyPoint = true;
+            allyProgress = 10;
+
+            captured = true;
+            enemyPoint = false;
+        }
+
+        if (allyPoint == false && enemyPoint == true && enemyProgress == 0)
+        {
+            allyPoint = true;
+            allyProgress = 10;
+
+            captured = true;
+            enemyPoint = false;
+        }
+
+        //update capturepoint sprite and activate sfx
+        if(redPoint == true && captured == true)
+        {
+            spriteRenderer.sprite = redSprite;
+            FindObjectOfType<AudioManager>().Play("Capture");
+
+        }
+        else if(bluePoint == true && captured == true)
+        {
+            spriteRenderer.sprite = blueSprite;
+            FindObjectOfType<AudioManager>().Play("Capture");
+
+        }
+    }
+
+    void ManualUpdateProgress(ref int allyProgress, ref int enemyProgress, ref bool allyPoint, ref bool enemyPoint)
     {
         timer += Time.deltaTime;
         if (timer >= interval)
         {
-            if (otherProgress > 0)
+            // if condition that only works on neutral points, points that has never been captured
+            if (allyPoint == false && enemyPoint == false && enemyProgress > 0)
             {
-                otherProgress -= 1;
+                enemyProgress -= 1;
             }
-            else
+            else if (allyPoint == false && enemyPoint == false && allyProgress < 10)
             {
-                if(progressToUpdate != 10){
-                    progressToUpdate += 1;
-                }
+                allyProgress += 1;
             }
+            
+
+            if (allyPoint == false && enemyPoint == true && enemyProgress > 0)
+            {
+                enemyProgress -= 1;
+            }
+            
+
             timer -= interval;
         }
     }
 
-    void DecreaseProgress(ref int progress)
+    void AutoUpdateProgress(ref int allyProgress, ref bool allyPoint)
     {
         timer += Time.deltaTime;
         if (timer >= interval)
         {
-            if (progress > 0 && progress != 10)
+            //if the ALLY controls the point and the ENEMY partially progressed in capturing the point and the ENEMY is no longer capturing, then slowly revert the progress
+            if (allyProgress < 10 && allyPoint == true)
             {
-                progress -= 1;
+                allyProgress += 1;
             }
+            
+            //if the ENEMY controls the point and the ALLY partially progressed in capturing the point and the ALLY is no longer capturing, then slowly revert the progress
+            if (allyProgress > 0 && allyPoint == false)
+            {
+                allyProgress -= 1;
+            }
+
             timer -= interval;
         }
     }

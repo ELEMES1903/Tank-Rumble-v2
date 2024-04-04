@@ -15,9 +15,11 @@ public class TankAI : MonoBehaviour
     public  ProjectileShooter projectileShooter;
     public SetDestination setDestination;
     private CalculatePriority calculatePriority;
+    public CountdownUI countdownUI;
     public AIPath aiPath;
     private Seeker seeker;
     private Rigidbody2D rb;
+    public Animator animator;
 
     // Threshold distance to consider the tank has reached its destination
     public float destinationReachedThreshold = 0.1f;
@@ -25,6 +27,10 @@ public class TankAI : MonoBehaviour
     // Floats
     public float moveSpeed = 5f;
     public float detectionRadius = 5f;
+    string selfName;
+    public float enemyHealth;
+    public bool canRoam;
+
 
     // Enemy Objects
     string enemyName;
@@ -43,51 +49,48 @@ public class TankAI : MonoBehaviour
     public float checkTeam2Progress;
     public float checkTeam1Progress;
 
-
-    public float enemyHealth;
-    public bool GameInProgress = true;
-    private Animator anim;
-
-    void Start(){
-        // Get the AIPath component attached to this GameObject
-        aiPath = GetComponent<AIPath>();
-
+    void Start()
+    {
         // If all tanks are tagged properly, set the enemy as the gameobject with the other tag
         if(gameObject.CompareTag("Tank1")||gameObject.CompareTag("Tank2")){
 
-            if(gameObject.CompareTag("Tank1")){ enemyName = "Tank2"; }
-            if(gameObject.CompareTag("Tank2")){ enemyName = "Tank1"; }
+            if(gameObject.CompareTag("Tank1")){ enemyName = "Tank2"; selfName = "Tank1"; }
+            if(gameObject.CompareTag("Tank2")){ enemyName = "Tank1"; selfName = "Tank2"; }
         } else{
             Debug.LogWarning("Tags on tanks not set properly");
         }
-        
 
         // Setting references
         rb = gameObject.GetComponent<Rigidbody2D>();
-        anim = gameObject.GetComponent<Animator>();
         calculatePriority = gameObject.GetComponent<CalculatePriority>();
+        animator = gameObject.GetComponent<Animator>();
         aiPath = gameObject.GetComponent<AIPath>();
         seeker = GetComponent<Seeker>();
-        SetRandomDestination();
-
+        
+        canRoam = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindTargetInRadius();
-        UpdatePriorities();
-        ExecuteAction();
-
-        // Check if the tank is moving
-        if (rb.velocity.magnitude > 0.1f)
+        if(countdownUI.GameInProgress == true)
         {
-            anim.SetBool("IsMoving", true);
+            FindTargetInRadius();
+            UpdatePriorities();
+            ExecuteAction(); 
+            RotateTowardsNextWaypoint();
         }
-        else
+
+        if(selfName == "Tank1")
         {
-            // Tank is not moving
-            anim.SetBool("IsMoving", false);
+            if(aiPath.remainingDistance <= 1)
+            {
+                animator.SetBool("IsMoving", false);
+            }
+            else 
+            {
+                animator.SetBool("IsMoving", true);
+            }
         }
     }
 
@@ -102,14 +105,12 @@ public class TankAI : MonoBehaviour
         actionPriorities[ActionType.FindHealth] = calculatePriority.CalculateFindHealthPriority();
         actionPriorities[ActionType.Roam] = calculatePriority.CalculateRoamPriority();
         actionPriorities[ActionType.Capture] = calculatePriority.CalculateCapturePriority();
-
-
     }
 
     // Select action with highest priority and execute it
     void ExecuteAction()
     {
-        //if(GameInProgress == true){
+        
 
             ActionType highestPriorityAction = GetHighestPriorityAction();
             switch (highestPriorityAction)
@@ -127,8 +128,6 @@ public class TankAI : MonoBehaviour
                     Capture();
                     break;
             }
-
-        //}
     }
 
     ActionType GetHighestPriorityAction()
@@ -156,8 +155,8 @@ public class TankAI : MonoBehaviour
     enemy = null;
     closestHP = null;
     capturepoint = null;
-    checkTeam1Progress = 0f;
-    checkTeam2Progress = 0f;
+    //checkTeam1Progress = 0f;
+    //checkTeam2Progress = 0f;
 
     // Find all colliders within the detection radius
     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
@@ -199,13 +198,13 @@ public class TankAI : MonoBehaviour
             RadiusController radiusController = collider.GetComponent<RadiusController>();
 
             // Check the points for
-            checkTeam1Progress = radiusController.t1Progress;
-            checkTeam2Progress = radiusController.t2Progress;
+            checkTeam1Progress = radiusController.redProgress;
+            checkTeam2Progress = radiusController.blueProgress;
 
             // Calculate the distance between self and the target
             distanceToCapturepoint = Vector3.Distance(transform.position, capturepoint.position);
         }
-    }
+    }   
 }
     
 
@@ -265,18 +264,26 @@ public class TankAI : MonoBehaviour
 
         currentActionType = "Capture";
     }
+
     void Roam()
     {
         aiPath.endReachedDistance = 0f;
-        // Check if the tank has reached its destination
-        if (IsDestinationReached())
+        if(canRoam == true)
         {
-            // If destination is reached, set a new random destination
             SetRandomDestination();
+            canRoam = false;
         }
-
+        else
+        {
+            // Check if the tank has reached its destination
+            if (IsDestinationReached())
+            {
+                canRoam = true;
+            }
+        }
         currentActionType = "Roam";
     }
+    
     // Method to set a random destination for the tank
     void SetRandomDestination()
     {
@@ -303,6 +310,30 @@ public class TankAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
-    // Draw the box area in the Scene view for visualization
 
+    
+    void RotateTowardsNextWaypoint()
+    {
+        // Check if AIPath has a valid path
+        if (aiPath.hasPath)
+        {
+            
+
+            // Get the direction to the next waypoint along the AIPath
+            Vector2 direction = (Vector2)aiPath.steeringTarget - (Vector2)transform.position;
+
+            // Ensure the direction is not zero (to avoid division by zero)
+            if (direction != Vector2.zero)
+            {
+                // Calculate the rotation angle towards the next waypoint
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+                
+                // Create a Quaternion from the angle
+                Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+                // Smoothly rotate the tank towards the next waypoint
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 300f * Time.deltaTime);
+            }
+        }
+    }
 }
