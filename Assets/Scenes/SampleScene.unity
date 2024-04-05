@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72504a71068a34448eedef06081d916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1.56
+  radius: 2.7
   redProgress: 0
   blueProgress: 0
   redPoint: 0
@@ -554,6 +554,7 @@ MonoBehaviour:
   interval: 1
   redSprite: {fileID: 21300000, guid: a58f84d5e27eb1147bb8d4d81d263891, type: 3}
   blueSprite: {fileID: 21300000, guid: 793ebff8973c3524987262c07013d5ff, type: 3}
+  captured: 0
   contested: 0
 --- !u!4 &243094428
 Transform:
@@ -564,7 +565,7 @@ Transform:
   m_GameObject: {fileID: 243094424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.3669, y: 5.8337007, z: 1}
+  m_LocalPosition: {x: 26.3669, y: 5.8337007, z: 1}
   m_LocalScale: {x: 5.48541, y: 5.48541, z: 5.48541}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -825,6 +826,158 @@ RectTransform:
   m_AnchoredPosition: {x: -0.016, y: 0.529}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &373905216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373905217}
+  - component: {fileID: 373905220}
+  - component: {fileID: 373905219}
+  - component: {fileID: 373905218}
+  m_Layer: 5
+  m_Name: Announcer Subtitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &373905217
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373905216}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 562730232}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -632}
+  m_SizeDelta: {x: 474.5031, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &373905218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373905216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd821c015f8c5742a38481bdd02c0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 373905219}
+  color1: {r: 1, g: 1, b: 1, a: 1}
+  color2: {r: 1, g: 0.5479204, b: 0.21069163, a: 1}
+  color1Duration: 1
+  color2Duration: 1
+--- !u!114 &373905219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373905216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: d506b597cdb209d4ab2a64f872837d01, type: 2}
+  m_sharedMaterial: {fileID: -4413345988967199116, guid: d506b597cdb209d4ab2a64f872837d01, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 26
+  m_fontSizeBase: 26
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &373905220
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373905216}
+  m_CullTransparentMesh: 1
 --- !u!1 &379600194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3497,6 +3650,7 @@ RectTransform:
   m_Children:
   - {fileID: 1819378142}
   - {fileID: 1550556555}
+  - {fileID: 373905217}
   - {fileID: 1702305321}
   m_Father: {fileID: 1879241000}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3618,7 +3772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -481}
+  m_AnchoredPosition: {x: 0, y: -493}
   m_SizeDelta: {x: 1768.2927, y: 171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &680967540
@@ -3809,6 +3963,8 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   healthBar: {fileID: 481349076}
+  TookDamage: 0
+  Destroyed: 0
 --- !u!114 &903332917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4272,6 +4428,8 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   healthBar: {fileID: 1655248037}
+  TookDamage: 0
+  Destroyed: 0
 --- !u!114 &941989353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4452,7 +4610,7 @@ Transform:
   m_GameObject: {fileID: 941989349}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.67, y: -15.37, z: 0}
+  m_LocalPosition: {x: -28.32, y: -15.65, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4820,6 +4978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalTime: 60
   timerImage: {fileID: 1122542834}
+  currentTime: 0
 --- !u!114 &1122542834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5279,6 +5438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalTime: 60
   timerImage: {fileID: 1429512244}
+  currentTime: 0
 --- !u!114 &1429512244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5369,6 +5529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalTime: 60
   timerImage: {fileID: 1525310192}
+  currentTime: 0
 --- !u!114 &1525310192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5590,7 +5751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72504a71068a34448eedef06081d916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1.56
+  radius: 2.7
   redProgress: 0
   blueProgress: 0
   redPoint: 0
@@ -5598,6 +5759,7 @@ MonoBehaviour:
   interval: 1
   redSprite: {fileID: 21300000, guid: 4098fb8a99f55784b87e948c0826b068, type: 3}
   blueSprite: {fileID: 21300000, guid: 2533f202aac4b4c4fa7bae2b57325996, type: 3}
+  captured: 0
   contested: 0
 --- !u!4 &1565111969
 Transform:
@@ -5819,7 +5981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72504a71068a34448eedef06081d916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1.56
+  radius: 2.7
   redProgress: 0
   blueProgress: 0
   redPoint: 0
@@ -5827,6 +5989,7 @@ MonoBehaviour:
   interval: 1
   redSprite: {fileID: 21300000, guid: eed61a67513a75d459ebca946c96a83a, type: 3}
   blueSprite: {fileID: 21300000, guid: 23352139b965119438e088a8489eecec, type: 3}
+  captured: 0
   contested: 0
 --- !u!4 &1602847374
 Transform:
@@ -6777,6 +6940,7 @@ GameObject:
   - component: {fileID: 1887240641}
   - component: {fileID: 1887240640}
   - component: {fileID: 1887240642}
+  - component: {fileID: 1887240643}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6841,6 +7005,55 @@ MonoBehaviour:
   imageB: {fileID: 1122542831}
   imageC: {fileID: 1525310189}
   Duration: 0.7
+--- !u!114 &1887240643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887240639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d84b8c74bf9794fb75ab2fd4d9d210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  announcerData:
+  - name: OnePointBlue
+    voiceline: One point left for Blue Team!
+    audioName: Ann_1PointLeft4Blue
+    cooldown: 10
+  - name: OnePointRed
+    voiceline: One point left for Red Team!
+    audioName: Ann_1PointLeft4Red
+    cooldown: 10
+  - name: isRedGonnaWin
+    voiceline: Is Red going to Win?!
+    audioName: Ann_isRedGonnaWin
+    cooldown: 10
+  - name: isBlueGonnaWin
+    voiceline: Is Blue going to Win?!
+    audioName: Ann_isBlueGonnaWin
+    cooldown: 10
+  - name: BlueWins
+    voiceline: Blue wins!!!
+    audioName: Ann_blueWins
+    cooldown: 10
+  - name: RedWins
+    voiceline: Red wins!!!
+    audioName: Ann_redWins
+    cooldown: 10
+  - name: tankStartsFight
+    voiceline: The Tanks are starting to fight !!
+    audioName: Ann_tanksStartFight
+    cooldown: 10
+  textDisplay: {fileID: 373905219}
+  PointA: {fileID: 1565111968}
+  PointB: {fileID: 1602847373}
+  PointC: {fileID: 243094427}
+  redTank: {fileID: 903332916}
+  blueTank: {fileID: 941989352}
+  redScore: 0
+  blueScore: 0
 --- !u!1 &1901558392
 GameObject:
   m_ObjectHideFlags: 0
@@ -6946,6 +7159,72 @@ MonoBehaviour:
   - name: Game Over
     clip: {fileID: 8300000, guid: 6673706730abf414d8a42bf44a1bf58f, type: 3}
     volume: 0.25
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_1PointLeft4Blue
+    clip: {fileID: 8300000, guid: a6ff20a740e712f43bda00b5df90ce2a, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_1PointLeft4Red
+    clip: {fileID: 8300000, guid: e6d68a24ea1b3404898b1e108ddb4199, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_321Fight!
+    clip: {fileID: 8300000, guid: 968b7becba1d9a043a1b4e195eace351, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_blueAlmostThere
+    clip: {fileID: 8300000, guid: 19c4cc6ac0ffedd49ba58421bd6d3857, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_blueWins
+    clip: {fileID: 8300000, guid: 9b69b97c0d213884981c03f4e22909d1, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_isBlueGonnaWin
+    clip: {fileID: 8300000, guid: 41abb2c474598ea4dabf967883d7356c, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_isRedGonnaWin
+    clip: {fileID: 8300000, guid: 60e84884f1bcb5243a5ea7b5aa89a3c1, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_redAlmostThere
+    clip: {fileID: 8300000, guid: f75c6d357f8d7164d99aed629d9413a5, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_RedWins
+    clip: {fileID: 8300000, guid: 797697db7f325b148bb653d341c6ddda, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_tanksStartFight
+    clip: {fileID: 8300000, guid: b9038ae550480e942bcd460a59214da8, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Ann_watchOut
+    clip: {fileID: 8300000, guid: e1b7b02e3ccf4dd45acdf50933c8b842, type: 3}
+    volume: 0.75
     pitch: 1
     loop: 0
     source: {fileID: 0}

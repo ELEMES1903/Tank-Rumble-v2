@@ -6,7 +6,7 @@ public class CountdownUI : MonoBehaviour
 {
     public TextMeshProUGUI countdownText; // Reference to the TextMeshProUGUI component
     public float countdownDuration = 3f; // Duration of the countdown
-    public string goText = "Go!"; // Text to display after the countdown
+    public string goText = "Fight!"; // Text to display after the countdown
     private float countdownTimer; // Timer for the countdown
     public bool startCountdown;
     public bool GameInProgress = false;
@@ -72,6 +72,7 @@ public class CountdownUI : MonoBehaviour
             startCountdown = true;
             GameRunning = true;
             FindObjectOfType<AudioManager>().Play("Game Start");
+            FindObjectOfType<AudioManager>().Play("Ann_321Fight!");
         }
         
     }

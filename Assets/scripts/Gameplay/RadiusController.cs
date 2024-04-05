@@ -27,7 +27,7 @@ public class RadiusController : MonoBehaviour
     // Reference to the sprite renderer
     private SpriteRenderer spriteRenderer;
 
-    private bool captured; 
+    public bool captured; 
     private bool canPlaySound;
 
     public bool contested = false;

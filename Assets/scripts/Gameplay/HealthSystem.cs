@@ -11,6 +11,8 @@ public class HealthSystem : MonoBehaviour
     bool playSound;
     public HealthBar healthBar;
 
+    public bool TookDamage;
+    public bool Destroyed;
 
     void Start(){
 
@@ -37,6 +39,8 @@ public class HealthSystem : MonoBehaviour
     // Method to take damage
     public void TakeDamage(int damageAmount)
     {
+        TookDamage = true;
+        TookDamage = false;
         // Reduce health points
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
@@ -45,6 +49,9 @@ public class HealthSystem : MonoBehaviour
         // Check if health points are less than or equal to 0
         if (currentHealth <= 0)
         {
+            Destroyed = true;
+            Destroyed = false;
+            
             // Destroy the GameObject
             Destroy(gameObject);
             
