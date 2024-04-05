@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    
+    public CountdownUI countdownUI;
+    
     // Health points
     public int currentHealth = 0;
     public int maxHealth = 100;
@@ -46,7 +49,11 @@ public class HealthSystem : MonoBehaviour
             Destroy(gameObject);
             
             FindObjectOfType<AudioManager>().Stop("LowHealth");
+            FindObjectOfType<AudioManager>().Stop("Game Music");
             FindObjectOfType<AudioManager>().Play("Destroyed");
+            FindObjectOfType<AudioManager>().Play("Game Over");
+
+            countdownUI.GameInProgress = false;
         }
     }
 

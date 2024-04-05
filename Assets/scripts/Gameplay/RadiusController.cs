@@ -27,8 +27,10 @@ public class RadiusController : MonoBehaviour
     // Reference to the sprite renderer
     private SpriteRenderer spriteRenderer;
 
-    public bool captured; 
-    public bool canPlaySound;
+    private bool captured; 
+    private bool canPlaySound;
+
+    public bool contested = false;
 
     void Start()
     {
@@ -66,22 +68,25 @@ public class RadiusController : MonoBehaviour
         {
             // Both tanks detected: no progress change
             FindObjectOfType<AudioManager>().Play("InterruptCapture");
+            contested = true;
         }
         else if (tank1Detected)
         {
             UpdateCaptureStatus(ref redProgress, ref blueProgress, ref redPoint, ref bluePoint);
             ManualUpdateProgress(ref redProgress, ref blueProgress, ref redPoint, ref bluePoint);
+            contested = false;
         }
         else if (tank2Detected)
         {
             UpdateCaptureStatus(ref blueProgress, ref redProgress, ref bluePoint, ref redPoint);
             ManualUpdateProgress(ref blueProgress, ref redProgress, ref bluePoint, ref redPoint);
-
+            contested = false;
         }
         else
         {
             AutoUpdateProgress(ref redProgress, ref redPoint);
             AutoUpdateProgress(ref blueProgress, ref bluePoint);
+            contested = false;
         }      
 
         if(tank1Detected||tank2Detected)

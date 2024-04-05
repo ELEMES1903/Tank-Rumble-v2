@@ -12,12 +12,20 @@ public class CountdownUI : MonoBehaviour
     public bool GameInProgress = false;
     public bool GameRunning;
 
+    // Reference to the CanvasGroup of the UI element
+    public CanvasGroup GameUI;
+
+    public CanvasGroup Description;
+
     void Start()
     {
         FindObjectOfType<AudioManager>().Play("Tittle Music");
         // Initialize the countdown timer
         countdownTimer = countdownDuration;
         GameRunning = false;
+
+        GameUI.alpha = 0;
+        Description.alpha = 1;
     }
 
     void Update()
@@ -54,8 +62,12 @@ public class CountdownUI : MonoBehaviour
         if(GameRunning == false)
         {
             FindObjectOfType<AudioManager>().Stop("Tittle Music");
+
             GameObject startButton = GameObject.Find("StartButton");
             startButton.SetActive(false);
+
+            GameUI.alpha = 1;
+            Description.alpha = 0;
 
             startCountdown = true;
             GameRunning = true;
