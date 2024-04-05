@@ -25,6 +25,7 @@ public class ProjectileShooter : MonoBehaviour
 
                 // Instantiate a new projectile at the current position and rotation of the shooter
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+                FindObjectOfType<AudioManager>().Play("Gun");
 
                 // Get the Rigidbody2D component of the projectile
                 Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();

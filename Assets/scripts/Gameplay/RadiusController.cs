@@ -28,10 +28,12 @@ public class RadiusController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public bool captured; 
+    public bool canPlaySound;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        canPlaySound = true;
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class RadiusController : MonoBehaviour
         if (tank1Detected && tank2Detected)
         {
             // Both tanks detected: no progress change
+            FindObjectOfType<AudioManager>().Play("InterruptCapture");
         }
         else if (tank1Detected)
         {
@@ -80,7 +83,23 @@ public class RadiusController : MonoBehaviour
             AutoUpdateProgress(ref redProgress, ref redPoint);
             AutoUpdateProgress(ref blueProgress, ref bluePoint);
         }      
+
+        if(tank1Detected||tank2Detected)
+        {
+            if(canPlaySound)
+            {
+                FindObjectOfType<AudioManager>().Play("Capturing");
+                canPlaySound = false;
+            }
+        }
+        else if (!tank1Detected && !tank2Detected)
+        {
+           canPlaySound = true;
+           FindObjectOfType<AudioManager>().Stop("Capturing");
+        }
+
     }
+
 
     void UpdateCaptureStatus(ref int allyProgress, ref int enemyProgress, ref bool allyPoint, ref bool enemyPoint)
     {

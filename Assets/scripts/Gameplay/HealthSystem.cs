@@ -5,7 +5,7 @@ public class HealthSystem : MonoBehaviour
     // Health points
     public int currentHealth = 0;
     public int maxHealth = 100;
-
+    bool playSound;
     public HealthBar healthBar;
 
 
@@ -13,8 +13,23 @@ public class HealthSystem : MonoBehaviour
 
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        playSound = true;
     }
 
+    void Update()
+    {
+        
+        if(currentHealth <= 25 && playSound == true)
+        {
+            FindObjectOfType<AudioManager>().Play("LowHealth");
+            playSound = false;
+        }
+        else if (currentHealth >= 25)
+        {
+            FindObjectOfType<AudioManager>().Stop("LowHealth");
+            playSound = true;
+        }
+    }
 
     // Method to take damage
     public void TakeDamage(int damageAmount)
@@ -22,12 +37,16 @@ public class HealthSystem : MonoBehaviour
         // Reduce health points
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
+        FindObjectOfType<AudioManager>().Play("TakeDamage");
 
         // Check if health points are less than or equal to 0
         if (currentHealth <= 0)
         {
             // Destroy the GameObject
             Destroy(gameObject);
+            
+            FindObjectOfType<AudioManager>().Stop("LowHealth");
+            FindObjectOfType<AudioManager>().Play("Destroyed");
         }
     }
 
@@ -44,15 +63,4 @@ public class HealthSystem : MonoBehaviour
         healthBar.SetHealth(currentHealth);
 
     }
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -14,6 +14,7 @@ public class CountdownUI : MonoBehaviour
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("Tittle Music");
         // Initialize the countdown timer
         countdownTimer = countdownDuration;
         GameRunning = false;
@@ -52,6 +53,10 @@ public class CountdownUI : MonoBehaviour
     {
         if(GameRunning == false)
         {
+            FindObjectOfType<AudioManager>().Stop("Tittle Music");
+            GameObject startButton = GameObject.Find("StartButton");
+            startButton.SetActive(false);
+
             startCountdown = true;
             GameRunning = true;
             FindObjectOfType<AudioManager>().Play("Game Start");

@@ -31,6 +31,10 @@ public class TankAI : MonoBehaviour
     public float enemyHealth;
     public bool canRoam;
 
+    private bool canPlayRedEngine;
+    private bool canPlayBlueEngine;
+
+
 
     // Enemy Objects
     string enemyName;
@@ -83,13 +87,41 @@ public class TankAI : MonoBehaviour
 
         if(selfName == "Tank1")
         {
-            if(aiPath.remainingDistance <= 1)
+            if(aiPath.hasPath && aiPath.remainingDistance > 1)
             {
-                animator.SetBool("IsMoving", false);
+                animator.SetBool("RedIsMoving", true);
+
+                if(canPlayRedEngine)
+                {
+                    FindObjectOfType<AudioManager>().Play("RedEngine");
+                    canPlayRedEngine = false;
+                }
             }
-            else 
+            else if (!aiPath.hasPath)
             {
-                animator.SetBool("IsMoving", true);
+                animator.SetBool("RedIsMoving", false);
+                FindObjectOfType<AudioManager>().Stop("RedEngine");
+                canPlayRedEngine = true;
+            }
+        }
+
+        if(selfName == "Tank2")
+        {
+            if(aiPath.hasPath && aiPath.remainingDistance > 1)
+            {
+                animator.SetBool("BlueIsMoving", true);
+                if(canPlayBlueEngine)
+                {
+                    //FindObjectOfType<AudioManager>().Play("BlueEngine");
+                    canPlayRedEngine = false;
+                }
+                
+            }
+            else if (!aiPath.hasPath) 
+            {
+                animator.SetBool("BlueIsMoving", false);
+                //FindObjectOfType<AudioManager>().Stop("BlueEngine");
+                canPlayRedEngine = true;
             }
         }
     }
@@ -239,7 +271,8 @@ public class TankAI : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 300f * Time.deltaTime);
             }
 
-            projectileShooter.ShootProjectile();
+            projectileShooter.ShootProjectile();    
+
         }
     }
 
